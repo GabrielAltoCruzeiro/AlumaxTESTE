@@ -38,3 +38,4 @@ def home(request):
         return render(request, 'obrigado.html')
 
     return render(request, 'index.html')
+    
