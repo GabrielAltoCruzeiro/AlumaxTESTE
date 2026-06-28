@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import requests
-import os
+from django.http import HttpResponse 
+from django.core.mail import send_mail
 
 def home(request):
     if request.method == 'POST':
@@ -21,22 +20,20 @@ def home(request):
         if not suporte:
             return HttpResponse("Você precisa adicionar o tipo de suporte.")
 
-        url = "https://api.brevo.com/v3/smtp/email"
-        headers = {
-            "accept": "application/json",
-            "api-key": os.environ.get('BREVO_API_KEY'),
-            "content-type": "application/json"
-        }
-        payload = {
-            "sender": {"name": "Alumax TI", "email": "b030cd001@smtp-brevo.com"},
-            "to": [
-                {"email": "gabriel.mendonca@alumax.ind.br"},
-                {"email": "gabrielalto308viol@gmail.com"}
-            ],
-            "subject": "Novo Chamado de TI",
-            "textContent": f"Nome: {nome}\nEmail: {email}\nSetor: {setor}\nSuporte: {suporte}\nCategoria: {categoria}\nDetalhes: {detalhe}"
-        }
-        requests.post(url, json=payload, headers=headers)
+        send_mail(
+            subject="Novo Chamado de TI",
+            message=f"""
+            Nome: {nome}
+            Email: {email}
+            Setor: {setor}
+            Suporte: {suporte}
+            Categoria: {categoria}
+            Detalhes: {detalhe}
+            """,
+            from_email="gabrielalto.tech@outlook.com",
+            recipient_list=["gabriel.mendonca@alumax.ind.br", "gabrielalto308viol@gmail.com"],
+            fail_silently=False,
+        )
 
         return render(request, 'obrigado.html')
 
