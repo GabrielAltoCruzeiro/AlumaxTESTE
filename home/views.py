@@ -21,13 +21,13 @@ def home(request):
             return HttpResponse("Você precisa adicionar o tipo de suporte.")
 
         send_mail(
-            subject="Novo Chamado de TI",
+            subject=f"Novo Chamado de TI - ALUMAX -{setor} ",
             message=f"""
             Nome: {nome}
             Email: {email}
             Setor: {setor}
             Suporte: {suporte}
-            Categoria: {categoria}
+            Problema: {categoria}
             Detalhes: {detalhe}
             """,
             from_email="gabrielalto.tech@outlook.com",
@@ -38,4 +38,3 @@ def home(request):
         return render(request, 'obrigado.html')
 
     return render(request, 'index.html')
-    
