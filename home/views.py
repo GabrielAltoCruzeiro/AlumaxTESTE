@@ -21,7 +21,7 @@ def home(request):
             return HttpResponse("Você precisa adicionar o tipo de suporte.")
 
         send_mail(
-            subject=f"Novo Chamado de TI - ALUMAX -{setor} ",
+            subject=f"Novo Chamado de TI - ALUMAX - , {setor} ",
             message=f"""
             Nome: {nome}
             Email: {email}
@@ -30,8 +30,8 @@ def home(request):
             Problema: {categoria}
             Detalhes: {detalhe}
             """,
-            from_email="gabrielalto.tech@outlook.com",
-            recipient_list=["gabriel.mendonca@alumax.ind.br", "gabrielalto308viol@gmail.com"],
+            from_email="gabrielalto308viol@gmail.com",
+            recipient_list=["felipe.telles@alumax.ind.br"],
             fail_silently=False,
         )
 
